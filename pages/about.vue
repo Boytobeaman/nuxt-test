@@ -4,5 +4,10 @@
     <AppAlert>
       This is an auto-imported component about
     </AppAlert>
+    <div class="parent">
+      <div class="child">
+        <h4>child content</h4>
+      </div>
+    </div>
   </div>
 </template>

@@ -1,0 +1,9 @@
+.test{
+    font-size: x-large;
+}
+
+.parent{
+    .child{
+        color: purple;
+    }
+}
