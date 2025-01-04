@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@element-plus/nuxt',
-  ]
+  modules: ['@nuxtjs/tailwindcss', '@element-plus/nuxt', '@nuxthub/core'],
+  hub: {
+    // NuxtHub options
+  }
 })
