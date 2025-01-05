@@ -15,7 +15,7 @@
       </div>
       
       <div class="h-80 overflow-y-scroll mt-5 p-3 bg-slate-200">
-          <p id="messageContainer">{{ respData }}</p>
+          <p id="messageContainer" v-html="transformedRespData"></p>
       </div>
       
     </div>
@@ -35,6 +35,8 @@ const message = ref("")
 const setSystemMessage = ref(false)
 const systemMessage = ref("You are an AI assistant that helps people find information.")
 const respData = ref("")
+
+const transformedRespData = computed(() => respData.value?.replace(/\n/g, "<br/>"))
 
 const prettyObject = (msg) => {
   const obj = msg;
