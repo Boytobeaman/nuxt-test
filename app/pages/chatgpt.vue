@@ -15,7 +15,7 @@
       </div>
       
       <div class="h-80 overflow-y-scroll mt-5 p-3 bg-slate-200">
-          <p>{{ respData }}</p>
+          <p id="messageContainer">{{ respData }}</p>
       </div>
       
     </div>
@@ -61,23 +61,28 @@ const send = async() => {
     }
     try {
         loading.value=true;
-        const payload = {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": systemMessage.value ? systemMessage.value :"You are ChatGPT, a large language model trained by OpenAI."
-                },
-                {
-                    "role": "user",
-                    "content": message.value
-                }
-            ],
-            "stream": true,
-            "model": "gpt-3.5-turbo",
-            "temperature": 0.5,
-            "presence_penalty": 0,
-            "frequency_penalty": 0,
-            "top_p": 1
+        // const payload = {
+        //     "messages": [
+        //         {
+        //             "role": "system",
+        //             "content": systemMessage.value ? systemMessage.value :"You are ChatGPT, a large language model trained by OpenAI."
+        //         },
+        //         {
+        //             "role": "user",
+        //             "content": message.value
+        //         }
+        //     ],
+        //     "stream": true,
+        //     "model": "gpt-3.5-turbo",
+        //     "temperature": 0.5,
+        //     "presence_penalty": 0,
+        //     "frequency_penalty": 0,
+        //     "top_p": 1
+        // }
+        const payload ={
+            "message": message.value,
+            "systemMessage": systemMessage.value ? systemMessage.value :"You are ChatGPT, a large language model trained by OpenAI.",
+            "stream": true
         }
 
         respData.value=""
@@ -94,11 +99,14 @@ const send = async() => {
             // finished = true;
             respData.value = responseText + remainText
             loading.value=false;
+
+            const messageContainer = document.getElementById("messageContainer");
+            messageContainer.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
             // options.onFinish();
         //   }
         };
  
-        fetchEventSource(`https://chat.chatgpt-use.com/api/openai/v1/chat/completions`, {
+        fetchEventSource(`https://fastapi.50d.top/chat`, {
             method: "POST",
             body: str,
             headers:{
@@ -112,12 +120,13 @@ const send = async() => {
                 const text = msg.data;
                 try {
                     const json = JSON.parse(text);
-                    const choices = json.choices;
-                    const delta = choices[0]?.delta?.content;
-                    const textmoderation = json?.prompt_filter_results;
+                    // const choices = json.choices;
+                    // const delta = choices[0]?.delta?.content;
+                    // const textmoderation = json?.prompt_filter_results;
+                    const message = json?.message
 
-                    if (delta) {
-                        remainText += delta;
+                    if (message) {
+                        remainText += message;
                         return finish()
                     }
                     
