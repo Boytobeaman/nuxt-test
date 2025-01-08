@@ -95,11 +95,11 @@ useSeoMeta({
   background-color: #d3dce6;
 }
 
-.el-carousel__container{
+.el-carousel :deep(.el-carousel__container){
   height: 400px!important;
 }
-@media (max-width: 767.98px) { 
-  .el-carousel__container{
+@media (max-width: 767.98px) {
+  .el-carousel :deep(.el-carousel__container){
     height: 200px!important;
   }
 }
