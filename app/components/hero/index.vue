@@ -165,10 +165,10 @@ const playVideo = () => {
           </defs>
         </svg>
       </div>
-      <video width="100%" height="auto" id="introduceVideo" controls poster="/images/iot-bettery-poster.png">
+      <!-- <video width="100%" height="auto" id="introduceVideo" controls poster="/images/iot-bettery-poster.png">
         <source src="/videos/video-of-iot-battery.mp4" type="video/mp4">
         Your browser does not support the video tag.
-      </video>
+      </video> -->
       <p class="text-slate-100 text-xxs">smart IoT
         products and solutions as well as the arrival of 5g
         will touch every aspect of our lives
