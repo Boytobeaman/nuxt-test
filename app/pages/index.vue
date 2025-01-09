@@ -1,7 +1,7 @@
 <template>
   <!-- simpleEcommerce.vue -->
   <LazyHero />
-  <LazyApplication />
+  <!-- <LazyApplication /> -->
 </template>
 
 <script setup>
