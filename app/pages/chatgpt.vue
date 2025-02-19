@@ -15,7 +15,7 @@
       </div>
       
       <div class="h-80 overflow-y-scroll mt-5 p-3 bg-slate-200">
-          <p id="messageContainer" v-html="transformedRespData"></p>
+          <p id="messageContainer" class="markdown-body" v-html="transformedRespData"></p>
       </div>
       
     </div>
@@ -30,13 +30,26 @@ definePageMeta({
 
 import { ref } from 'vue';
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
+import markdownit from 'markdown-it'
+import hljs from 'highlight.js'
+const md = markdownit({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang }).value;
+      } catch (__) {}
+    }
+
+    return ''; // use external default escaping
+  }
+});
 const loading = ref(false)
 const message = ref("")
 const setSystemMessage = ref(false)
 const systemMessage = ref("You are an AI assistant that helps people find information.")
 const respData = ref("")
 
-const transformedRespData = computed(() => respData.value?.replace(/\n/g, "<br/>"))
+const transformedRespData = computed(() => md.render(respData.value))
 
 const prettyObject = (msg) => {
   const obj = msg;
@@ -190,3 +203,16 @@ const send = async() => {
 
 
 </script>
+
+<style>
+/* @import url("highlight.js/styles/default.min.css"); */
+@import url("highlight.js/styles/atom-one-dark.min.css");
+
+.markdown-body pre code {
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+    background: #1a1b26;
+    color: #cbd2ea;
+}
+</style>
